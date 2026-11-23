@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="LifeDrop is a blood donor registration and camp management dashboard for organizing donor records and viewing blood group insights.">
+  <title>LifeDrop — Smart Blood Donor Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#dashboard" aria-label="LifeDrop home">
+        <span class="brand-mark"><span>+</span></span>
+        <span><strong>LifeDrop</strong><small>SMART DONOR NETWORK</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="navigation" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard" data-section="dashboard"><span class="nav-icon">▦</span><span>Overview</span><span class="nav-arrow">›</span></a>
+        <a class="nav-link" href="#register" data-section="register"><span class="nav-icon">＋</span><span>Register donor</span></a>
+        <a class="nav-link" href="#donors" data-section="donors"><span class="nav-icon">♙</span><span>Donor directory</span><span class="nav-count" id="navDonorCount">0</span></a>
+        <a class="nav-link" href="#analytics" data-section="analytics"><span class="nav-icon">▥</span><span>Insights & reports</span></a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-impact">
+        <div class="impact-orbit"><span>♥</span></div>
+        <p class="eyebrow">A SMALL ACT. A BIG IMPACT.</p>
+        <h3>Be the reason<br>someone smiles.</h3>
+        <p>One willing donor can make a meaningful difference.</p>
+        <button class="sidebar-cta" type="button" onclick="showSection('register')">Add a donor <span>↗</span></button>
+      </div>
+      <div class="sidebar-foot"><span class="online-dot"></span> All systems operational <span class="version">v2.0</span></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumb"><span>LifeDrop</span><b>/</b><strong id="pageTitle">Overview</strong></div>
+        <div class="topbar-right">
+          <div class="date-chip"><span>◷</span><span id="todayLabel">Today</span></div>
+          <div class="profile-chip"><span class="profile-avatar">LD</span><span><b>Camp Admin</b><small>Project workspace</small></span></div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section class="page-section active" id="dashboard">
+        <div class="page-heading"><div><p class="eyebrow">YOUR COMMUNITY, CONNECTED</p><h1>Good things happen <span>when we give.</span></h1><p class="muted">A clear view of your donor community and its impact.</p></div><button class="button button-primary" onclick="showSection('register')"><span>＋</span> Register a donor</button></div>
+        <div class="hero-card">
+          <div class="hero-copy"><span class="hero-pill"><i></i> THE LIFEDROP INITIATIVE</span><h2>Every drop has<br><em>a story.</em></h2><p>Bring donors and communities closer. Keep records organized, understand your donor base, and help make every camp count.</p><div class="hero-actions"><button class="button button-light" onclick="showSection('register')">Add new donor <span>↗</span></button><button class="hero-link" onclick="showSection('analytics')">Explore insights <span>→</span></button></div><div class="hero-proof"><span class="proof-heart">♥</span><span><b>Built around people.</b><small>Designed to support community-led donation drives.</small></span></div></div>
+          <div class="hero-art" aria-label="Decorative illustration of a blood drop and orbiting hearts"><div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-orbit orbit-c"></div><div class="drop-shadow"></div><div class="hero-drop"><span>♥</span></div><span class="float-heart heart-a">♥</span><span class="float-heart heart-b">✚</span><span class="float-heart heart-c">♥</span><div class="art-caption"><span class="caption-dot"></span> CARE IN ACTION <b>•</b> HOPE IN MOTION</div></div>
+        </div>
+        <div class="stats-grid">
+          <article class="metric-card"><div class="metric-top"><span class="metric-label">Total donors</span><span class="metric-icon icon-red">♙</span></div><div class="metric-value" id="totalDonors">0</div><div class="metric-foot"><span class="metric-accent">Community</span><span>registered volunteers</span></div></article>
+          <article class="metric-card"><div class="metric-top"><span class="metric-label">Screening passed*</span><span class="metric-icon icon-green">✓</span></div><div class="metric-value" id="eligibleDonors">0</div><div class="metric-foot"><span class="metric-accent green-text">Basic check</span><span>not medical clearance</span></div></article>
+          <article class="metric-card"><div class="metric-top"><span class="metric-label">Blood groups</span><span class="metric-icon icon-violet">✚</span></div><div class="metric-value" id="bloodGroups">0<span class="metric-total">/8</span></div><div class="metric-foot"><span class="metric-accent violet-text">Coverage</span><span>groups represented</span></div></article>
+          <article class="metric-card"><div class="metric-top"><span class="metric-label">Average age</span><span class="metric-icon icon-amber">⌁</span></div><div class="metric-value" id="averageAge">0</div><div class="metric-foot"><span class="metric-accent amber-text">Years</span><span>across donor records</span></div></article>
+        </div>
+        <div class="content-grid dashboard-charts">
+          <article class="surface-card chart-card"><div class="card-heading"><div><p class="eyebrow">DONOR MIX</p><h3>Blood group distribution</h3><p class="muted small">How your registered community is represented.</p></div><span class="live-label"><i></i> LIVE</span></div><div class="chart-area"><canvas id="bloodChart" aria-label="Donor count by blood group"></canvas><div class="chart-center"><strong id="chartTotal">0</strong><small>DONORS</small></div></div><div class="chart-legend" id="chartLegend"></div></article>
+          <article class="surface-card summary-card"><div class="card-heading"><div><p class="eyebrow">AT A GLANCE</p><h3>Blood group snapshot</h3><p class="muted small">Registered donor count per group.</p></div><span class="mini-icon">⌗</span></div><div class="blood-list" id="bloodSummary"></div><div class="summary-note"><span>ⓘ</span><p>These figures represent registrations, not verified or available blood units.</p></div></article>
+        </div>
+        <article class="surface-card recent-card"><div class="card-heading"><div><p class="eyebrow">LATEST ACTIVITY</p><h3>Recently registered donors</h3><p class="muted small">The latest entries added to your directory.</p></div><button class="button button-ghost" onclick="showSection('donors')">View directory <span>→</span></button></div><div class="table-scroll"><table><thead><tr><th>DONOR</th><th>CONTACT</th><th>BLOOD GROUP</th><th>AGE</th><th>SCREENING</th></tr></thead><tbody id="recentTable"></tbody></table></div></article>
+        <p class="medical-note">* Screening is a preliminary software indicator based on entered age and last-donation date only. It is not a medical assessment. Qualified medical staff must determine actual eligibility.</p>
+      </section>
+
+      <!-- REGISTRATION -->
+      <section class="page-section" id="register">
+        <div class="page-heading"><div><p class="eyebrow">GROW THE DONOR COMMUNITY</p><h1>Donor <span>registration</span></h1><p class="muted">Capture accurate details and keep your donor directory organized.</p></div><div class="secure-tag"><span>✓</span> Form validation enabled</div></div>
+        <div class="registration-layout"><aside class="form-aside"><div class="form-aside-icon">♥</div><p class="eyebrow">A MOMENT THAT MATTERS</p><h2>Every donor<br>starts with a<br><em>first step.</em></h2><p>Record the volunteer's details carefully. Their consent and accurate contact information matter.</p><div class="aside-check"><span>01</span><div><b>Accurate details</b><small>Check names and contact information.</small></div></div><div class="aside-check"><span>02</span><div><b>Respect consent</b><small>Register only with the donor's agreement.</small></div></div><div class="aside-check"><span>03</span><div><b>Medical review</b><small>Final eligibility is assessed by professionals.</small></div></div></aside>
+          <article class="surface-card form-card"><div class="form-card-heading"><div><p class="eyebrow">NEW DONOR PROFILE</p><h3>Personal information</h3><p class="muted small">Fields marked with * are required.</p></div><span class="required-key">* Required</span></div>
+            <form id="donorForm" novalidate>
+              <div class="form-section-label"><span>01</span> BASIC DETAILS</div>
+              <div class="form-grid">
+                <div class="field"><label for="name">Full name <b>*</b></label><input id="name" type="text" placeholder="e.g. Priya Sharma" maxlength="60" autocomplete="name" required></div>
+                <div class="field"><label for="phone">Mobile number <b>*</b></label><input id="phone" type="tel" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" autocomplete="tel" required></div>
+                <div class="field"><label for="email">Email address</label><input id="email" type="email" placeholder="name@example.com" maxlength="100" autocomplete="email"></div>
+                <div class="field"><label for="age">Age <b>*</b></label><input id="age" type="number" placeholder="Age in years" min="18" max="65" required></div>
+                <div class="field"><label for="gender">Gender <b>*</b></label><select id="gender" required><option value="">Select an option</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select></div>
+                <div class="field"><label for="bloodGroup">Blood group <b>*</b></label><select id="bloodGroup" required><option value="">Choose blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+              </div>
+              <div class="form-section-label section-label-spaced"><span>02</span> LOCATION & DONATION HISTORY</div>
+              <div class="form-grid">
+                <div class="field"><label for="city">City <b>*</b></label><input id="city" type="text" placeholder="e.g. Hyderabad" maxlength="60" autocomplete="address-level2" required></div>
+                <div class="field"><label for="lastDonation">Last donation date</label><input id="lastDonation" type="date"><small class="field-hint">Leave blank if the donor has never donated.</small></div>
+                <div class="field field-full"><label for="address">Full address <b>*</b></label><textarea id="address" rows="3" maxlength="250" placeholder="House / street, area, landmark..." required></textarea></div>
+              </div>
+              <label class="consent-row"><input type="checkbox" id="consent"><span class="custom-check"></span><span>I confirm that the information is accurate and the donor has given consent for their details to be recorded. <b>*</b></span></label>
+              <div class="form-actions"><button class="button button-ghost" type="reset">Clear form</button><button class="button button-primary" type="submit">Save donor <span>→</span></button></div><p class="form-message" id="formMessage" aria-live="polite"></p>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <!-- DIRECTORY -->
+      <section class="page-section" id="donors">
+        <div class="page-heading"><div><p class="eyebrow">YOUR DONOR COMMUNITY</p><h1>Donor <span>directory</span></h1><p class="muted">Find, review, export, and manage registered donor records.</p></div><button class="button button-primary" onclick="showSection('register')">＋ Add donor</button></div>
+        <article class="surface-card directory-card"><div class="directory-toolbar"><div class="search-wrap"><span>⌕</span><input type="search" id="searchInput" placeholder="Search by name, phone or city..." aria-label="Search donors"></div><select id="filterBlood" aria-label="Filter by blood group"><option value="">All blood groups</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select><button class="button button-outline" onclick="exportCSV()">↓ Export CSV</button><button class="button button-outline" onclick="exportBackup()">⇧ Backup</button></div><div class="directory-meta"><span id="recordCount">0 records</span><span><i class="online-dot"></i> Saved in this browser</span></div><div class="table-scroll"><table><thead><tr><th>DONOR</th><th>PHONE / EMAIL</th><th>BLOOD GROUP</th><th>AGE</th><th>CITY</th><th>SCREENING*</th><th>ACTIONS</th></tr></thead><tbody id="donorTable"></tbody></table></div><div class="empty-hint" id="emptyHint" hidden><span>♙</span><h3>No donor records yet</h3><p>Add your first donor to start building the directory.</p><button class="button button-primary" onclick="showSection('register')">Register first donor</button></div></article>
+        <p class="medical-note">* Screening status is not medical clearance. Donor records are stored locally in this browser and are not automatically shared or synchronized.</p>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="page-section" id="analytics">
+        <div class="page-heading"><div><p class="eyebrow">DATA THAT SUPPORTS ACTION</p><h1>Insights & <span>reports</span></h1><p class="muted">A data-led summary of your registered donor community.</p></div><button class="button button-outline" onclick="downloadReport()">↓ Download report</button></div>
+        <div class="stats-grid analytics-stats"><article class="metric-card"><div class="metric-top"><span class="metric-label">Total registrations</span><span class="metric-icon icon-red">♙</span></div><div class="metric-value" id="analyticsTotal">0</div><div class="metric-foot">All donor profiles</div></article><article class="metric-card"><div class="metric-top"><span class="metric-label">Average age</span><span class="metric-icon icon-amber">⌁</span></div><div class="metric-value" id="analyticsAge">0</div><div class="metric-foot">Years</div></article><article class="metric-card"><div class="metric-top"><span class="metric-label">Groups represented</span><span class="metric-icon icon-violet">✚</span></div><div class="metric-value" id="analyticsGroups">0 / 8</div><div class="metric-foot">Unique blood groups</div></article><article class="metric-card"><div class="metric-top"><span class="metric-label">Screening pass rate*</span><span class="metric-icon icon-green">✓</span></div><div class="metric-value" id="eligibilityRate">0%</div><div class="metric-foot">Preliminary software indicator</div></article></div>
+        <div class="content-grid analytics-grid"><article class="surface-card chart-card"><div class="card-heading"><div><p class="eyebrow">DISTRIBUTION</p><h3>Donors by blood group</h3><p class="muted small">Compare registered donor counts.</p></div></div><div class="chart-area analytics-chart-area"><canvas id="analyticsChart" aria-label="Bar chart of donor counts by blood group"></canvas></div></article><article class="surface-card insight-card"><p class="eyebrow">COMMUNITY INSIGHT</p><h3>What the numbers tell us</h3><div class="insight-highlight"><span>★</span><div><small>MOST REPRESENTED GROUP</small><strong id="topBloodGroup">—</strong><p id="topBloodDetail">Register donors to reveal the leading group.</p></div></div><div class="insight-row"><span>Donors with records</span><b id="insightTotal">0</b></div><div class="insight-row"><span>Groups represented</span><b id="insightGroups">0 of 8</b></div><div class="insight-row"><span>Screening passed*</span><b id="insightEligible">0</b></div></article></div>
+        <article class="surface-card report-card"><div class="report-icon">✦</div><div><p class="eyebrow">AUTO-GENERATED OVERVIEW</p><h3>Executive summary</h3><p id="executiveSummary">No donor records are available yet. Register donors to generate a summary of your community.</p></div><button class="button button-primary" onclick="downloadReport()">Download summary <span>↓</span></button></article>
+        <p class="medical-note">* The pass rate reflects only the project's basic age and last-donation-date rules. It must not be used to approve or reject a person for blood donation.</p>
+      </section>
+      <footer class="app-footer"><span>© 2026 LifeDrop · Smart Blood Donor Network</span><span>Made with <b>♥</b> for community impact</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
